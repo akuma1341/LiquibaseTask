@@ -6,7 +6,7 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
 
     <changeSet id="fill_data" author="Raman Rashchupkin">
-        <sql dbms="mysql">
+        <sql dbms="h2, mysql">
             INSERT INTO students (first_name, last_name, birth_date)
             VALUES ('Alex', 'Smith', '2000-01-01'),
             ('John', 'Smith', '1999-02-20'),
