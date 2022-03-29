@@ -1,29 +1,30 @@
 package com.example.liquibasetask;
 
 import com.example.liquibasetask.entities.Student;
-import com.example.liquibasetask.repositories.ExamMarksRepository;
-import com.example.liquibasetask.repositories.StudentsRepository;
-import com.example.liquibasetask.repositories.SubjectRepository;
+import com.example.liquibasetask.services.ExamMarkService;
+import com.example.liquibasetask.services.StudentsService;
+import com.example.liquibasetask.services.SubjectsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class LiquibaseTaskApplicationTests {
     @Autowired
-    private StudentsRepository studentsRepository;
+    private StudentsService studentsService;
     @Autowired
-    private SubjectRepository subjectRepository;
+    private SubjectsService subjectsService;
     @Autowired
-    private ExamMarksRepository examMarksRepository;
+    private ExamMarkService examMarkService;
 
     @Test
     public void studentsRepositoryHave20Records() {
-        long recordCount = studentsRepository.count();
+        long recordCount = studentsService.count();
 
         assertEquals(20, recordCount);
     }
@@ -33,11 +34,11 @@ class LiquibaseTaskApplicationTests {
         Student student = new Student();
         student.setFirstName("FirstName");
         student.setLastName("LastName");
-        student.setBirthDate(new Date());
+        student.setBirthDate(Date.valueOf("2000-12-31"));
 
-        Student savedStudent = studentsRepository.save(student);
+        Student savedStudent = studentsService.save(student);
 
-        long recordCount = studentsRepository.count();
+        long recordCount = studentsService.count();
 
         assertNotNull(savedStudent);
         assertEquals(21, recordCount);
@@ -45,14 +46,14 @@ class LiquibaseTaskApplicationTests {
 
     @Test
     public void subjectRepositoryHave6Records() {
-        long recordCount = subjectRepository.count();
+        long recordCount = subjectsService.count();
 
         assertEquals(6, recordCount);
     }
 
     @Test
     public void examMarksRepositoryHave87Records() {
-        long recordCount = examMarksRepository.count();
+        long recordCount = examMarkService.count();
 
         assertEquals(87, recordCount);
     }
